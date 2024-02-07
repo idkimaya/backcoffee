@@ -17,36 +17,36 @@ model Users {
   password   String
   coffees    Coffees[]
   createdCoffees UserCreatedCoffees[]
-  favorites  Favorites[]
   orders     Orders[]
 }
 
 model Coffees {
-  coffeeID     Int      @id @default(autoincrement())
-  userID       Int
-  user         Users    @relation(fields: [userID], references: [userID])
-  coffee_title String
-  description  String
-  size         String
-  favorites    Favorites[] //inverser one-to-many many-to-one
-  order        Orders[]
+  coffeesID        Int       @id @default(autoincrement())
+  userID          Int
+  user            Users      @relation(fields: [userID], references: [userID])
+  coffee_title    String
+  description     String
+  size            String
+  price           Float
+  image           String
+  Coffees_Order    Coffee_Order[]
 }
 
 model UserCreatedCoffees {
-  userCreatedCoffeeID   Int      @id @default(autoincrement())
-  userID                Int
-  user                  Users    @relation(fields: [userID], references: [userID])
-  custom_coffee_title   String
-  description           String
-  size                  String
-  flavorID              Int
-  toppingID             Int
-  milkTypeID            Int
-  flavors               Flavors  @relation(fields: [flavorID], references: [flavorID])
-  toppings              Toppings @relation(fields: [toppingID], references: [toppingID])
-  milkTypes             MilkTypes @relation(fields: [milkTypeID], references: [milkTypeID])
-  favorites             Favorites[]
-  order                 Orders[]
+  userCreatedCoffeeID    Int       @id @default(autoincrement())
+  userID                 Int
+  user                   Users      @relation(fields: [userID], references: [userID])
+  custom_coffee_title    String
+  description            String
+  size                   String
+  price                  Float
+  flavorID               Int
+  toppingID              Int
+  milkTypeID             Int
+  UserCreatedCoffees_Order UserCreatedCoffees_Order[]
+  Flavors                Flavors   @relation(fields: [flavorID], references: [flavorID])
+  Toppings               Toppings  @relation(fields: [toppingID], references: [toppingID])
+  MilkTypes              MilkTypes @relation(fields: [milkTypeID], references: [milkTypeID])
 }
 
 model Flavors {
@@ -67,26 +67,30 @@ model MilkTypes {
   createdCoffees UserCreatedCoffees[]
 }
 
-model Favorites {
-  favoriteID           Int      @id @default(autoincrement())
-  userID               Int
-  user                 Users    @relation(fields: [userID], references: [userID])
-  CoffeeID             Int
-  coffee               Coffees  @relation(fields: [CoffeeID], references: [coffeeID])
-  userCreatedCoffeeID  Int
-  userCreatedCoffee    UserCreatedCoffees @relation(fields: [userCreatedCoffeeID], references: [userCreatedCoffeeID])
+model Orders {
+  orderID      Int        @id @default(autoincrement())
+  userID       Int
+  user         Users       @relation(fields: [userID], references: [userID])
+  quantity     Int
+  totalPrice   Float
+  orderDate    DateTime
+  status       String
+  Coffee_Order Coffee_Order[]
+  UserCreatedCoffees_Order UserCreatedCoffees_Order[]
 }
 
-model Orders {
-  orderID               Int      @id @default(autoincrement())
-  userID                Int
-  user                  Users    @relation(fields: [userID], references: [userID])
-  coffeeID              Int
-  coffee                Coffees  @relation(fields: [coffeeID], references: [coffeeID])
-  userCreatedCoffeeID   Int
-  userCreatedCoffee     UserCreatedCoffees @relation(fields: [userCreatedCoffeeID], references: [userCreatedCoffeeID])
-  quantity              Int
-  totalPrice            Float
-  orderDate             DateTime
-  status                String
+model Coffee_Order {
+  coffee_orderID  Int       @id @default(autoincrement())
+  coffeesID        Int
+  coffee          Coffees    @relation(fields: [coffeesID], references: [coffeesID])
+  orderID         Int
+  order           Orders     @relation(fields: [orderID], references: [orderID])
+}
+
+model UserCreatedCoffees_Order {
+  userCreatedCoffee_orderID Int       @id @default(autoincrement())
+  userCreatedCoffeeID       Int
+  userCreatedCoffee         UserCreatedCoffees @relation(fields: [userCreatedCoffeeID], references: [userCreatedCoffeeID])
+  orderID                   Int
+  order                     Orders            @relation(fields: [orderID], references: [orderID])
 }

@@ -13,7 +13,7 @@ export class CoffeesService {
   }
 
   async findById(id: number): Promise<Coffees> {
-    return this.prisma.coffees.findUnique({ where: { coffeeID: id } });
+    return this.prisma.coffees.findUnique({ where: { coffeesID: id } });
   }
 
   async create(data: CreateCoffeeDto): Promise<Coffees> {
@@ -21,12 +21,12 @@ export class CoffeesService {
   }
 
   async update(id: number, data: UpdateCoffeeDto): Promise<Coffees> {
-    return this.prisma.coffees.update({ where: { coffeeID: id }, data });
+    return this.prisma.coffees.update({ where: { coffeesID: id }, data });
   }
 
   
   async delete(id: number): Promise<Coffees> {
-    return this.prisma.coffees.delete({ where: { coffeeID: id } });
+    return this.prisma.coffees.delete({ where: { coffeesID: id } });
   }
 }
 
