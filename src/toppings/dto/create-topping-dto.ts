@@ -1,3 +1,3 @@
 export class CreateToppingDto {
-  topping_name: String;
+  topping_name: string;
 }

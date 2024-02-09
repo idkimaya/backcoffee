@@ -1,3 +1,3 @@
 export class CreateMilkDto {
-    milk_type: String;
+    milk_type: string;
   }

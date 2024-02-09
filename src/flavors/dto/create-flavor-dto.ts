@@ -1,3 +1,3 @@
 export class CreateFlavorDto {
-    flavor_name: String;
+    flavor_name: string;
   }
